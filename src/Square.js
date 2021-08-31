@@ -1,9 +1,11 @@
 import "./Square.css";
 
-export default function Square({ emoji }) {
+export default function Square({ emoji, clickHandler, index }) {
   return (
     <div className="Square">
-      <button>{emoji}</button>
+      <button onClick={() => clickHandler(index)} className="Square">
+        {emoji}
+      </button>
     </div>
   );
 }
