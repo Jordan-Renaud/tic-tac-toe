@@ -19,3 +19,15 @@
   background-color: black;
   border: 0.5rem solid black;
 }
+
+.App .new-game {
+  display: block;
+  margin: 3rem auto;
+  border: 0.2rem solid black;
+}
+
+.App .new-game:hover {
+  cursor: pointer;
+  background-color: orange;
+  transform: scale(0.95);
+}

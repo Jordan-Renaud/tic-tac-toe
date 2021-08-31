@@ -4,17 +4,21 @@ import "./App.css";
 
 function App() {
   const [currentEmoji, setCurrentEmoji] = useState("🐱");
-  const [gameBoard, setGameBoard] = useState(new Array(9).fill(""));
+  const [gameBoard, setGameBoard] = useState(resetBoard());
+
+  function resetBoard() {
+    return new Array(9).fill("");
+  }
 
   function setSquareEmoji(index) {
-    setGameBoard(ToNewGameBoard(index));
+    setGameBoard(toNewGameBoard(index));
   }
 
   function updateEmojiForNext(emoji) {
     setCurrentEmoji(emoji === "🐱" ? "🐶" : "🐱");
   }
 
-  function ToNewGameBoard(index) {
+  function toNewGameBoard(index) {
     let newGameBoard = gameBoard;
 
     if (newGameBoard[index] === "") {
@@ -39,6 +43,9 @@ function App() {
           />
         ))}
       </div>
+      <button className="new-game" onClick={() => setGameBoard(resetBoard())}>
+        Reset Game
+      </button>
     </div>
   );
 }
