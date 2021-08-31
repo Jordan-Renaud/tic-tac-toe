@@ -1,0 +1,16 @@
+.Square {
+  place-self: center;
+  width: 100%;
+  height: 100%;
+}
+
+.Square button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 5rem;
+}
+
+.Square button:hover {
+  cursor: pointer;
+}

@@ -15,10 +15,8 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   place-items: stretch;
-  column-gap: 1rem;
-  row-gap: 1rem;
-}
-
-.square {
-  background-color: aquamarine;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+  background-color: black;
+  border: 0.5rem solid black;
 }

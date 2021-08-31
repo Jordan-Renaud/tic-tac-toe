@@ -1,3 +1,4 @@
+import Square from "./Square";
 import "./App.css";
 
 function App() {
@@ -7,15 +8,15 @@ function App() {
       <h2 className="whose-turn">🐱's Turn</h2>
 
       <div className="container">
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
+        <Square emoji="" />
+        <Square emoji="" />
+        <Square emoji="" />
+        <Square emoji="🐱" />
+        <Square emoji="🐱" />
+        <Square emoji="🐱" />
+        <Square emoji="🐶" />
+        <Square emoji="🐶" />
+        <Square emoji="🐶" />
       </div>
     </div>
   );
