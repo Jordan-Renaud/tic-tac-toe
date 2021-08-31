@@ -23,9 +23,55 @@ function App() {
 
     if (newGameBoard[index] === "") {
       newGameBoard[index] = currentEmoji;
+      if (someoneHasWon(newGameBoard)) {
+        console.log("win");
+      }
+
       updateEmojiForNext(currentEmoji);
     }
     return newGameBoard;
+  }
+
+  function someoneHasWon(gameBoard) {
+    //horizontal checks
+    if (
+      (gameBoard[0] !== "" &&
+        gameBoard[0] === gameBoard[1] &&
+        gameBoard[0] === gameBoard[2]) ||
+      (gameBoard[3] !== "" &&
+        gameBoard[3] === gameBoard[4] &&
+        gameBoard[3] === gameBoard[5]) ||
+      (gameBoard[6] !== "" &&
+        gameBoard[6] === gameBoard[7] &&
+        gameBoard[6] === gameBoard[8])
+    )
+      return true;
+
+    //vertical checks
+    if (
+      (gameBoard[0] !== "" &&
+        gameBoard[0] === gameBoard[3] &&
+        gameBoard[0] === gameBoard[6]) ||
+      (gameBoard[1] !== "" &&
+        gameBoard[1] === gameBoard[4] &&
+        gameBoard[1] === gameBoard[7]) ||
+      (gameBoard[2] !== "" &&
+        gameBoard[2] === gameBoard[5] &&
+        gameBoard[2] === gameBoard[8])
+    )
+      return true;
+    //diagonal checks
+    if (
+      (gameBoard[0] !== "" &&
+        gameBoard[0] === gameBoard[4] &&
+        gameBoard[0] === gameBoard[8]) ||
+      (gameBoard[2] !== "" &&
+        gameBoard[2] === gameBoard[4] &&
+        gameBoard[2] === gameBoard[6])
+    )
+      return true;
+
+    return false;
   }
 
   return (
