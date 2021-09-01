@@ -1,6 +1,6 @@
-import Square from "./Square";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Confetti from "react-confetti";
+import Square from "./Square";
 import "./App.css";
 
 function App() {
@@ -9,6 +9,13 @@ function App() {
   const [currentEmoji, setCurrentEmoji] = useState("🐱");
   const [gameBoard, setGameBoard] = useState(newGameBoard);
   const [gameHasBeenWon, setGameHasBeenWon] = useState(false);
+  const [catScore, setCatScore] = useState(0);
+  const [dogScore, setDogScore] = useState(0);
+  const [winningEmoji, setWinningEmoji] = useState("");
+
+  useEffect(() => {
+    updateScore(winningEmoji);
+  }, [winningEmoji]);
 
   function setSquareEmoji(squareIndex) {
     setGameBoard(toUpdatedGameBoard(squareIndex));
@@ -22,6 +29,7 @@ function App() {
 
       if (someoneHasWon(updatedGameBoard)) {
         setGameHasBeenWon(true);
+        setWinningEmoji(updatedGameBoard[index]);
       }
 
       updateEmojiForNext(currentEmoji);
@@ -45,8 +53,9 @@ function App() {
       (gameBoard[6] !== "" &&
         gameBoard[6] === gameBoard[7] &&
         gameBoard[6] === gameBoard[8])
-    )
+    ) {
       return true;
+    }
 
     //vertical checks
     if (
@@ -75,12 +84,19 @@ function App() {
     return false;
   }
 
-  function showCelebration(someoneWon) {
+  function updateScore(winningEmoji) {
+    if (winningEmoji === "") return;
+    winningEmoji === "🐱"
+      ? setCatScore(catScore + 1)
+      : setDogScore(dogScore + 1);
+  }
+
+  function showCelebrationIf(someoneWon) {
     return someoneWon ? (
       <Confetti
         className="confetti"
         width={"500px"}
-        height={"580px"}
+        height={"570px"}
         recycle={false}
       />
     ) : (
@@ -91,23 +107,34 @@ function App() {
   function resetBoard() {
     setGameBoard(newGameBoard);
     setGameHasBeenWon(false);
+    setWinningEmoji("");
   }
 
   return (
     <div className="App">
       <h1 className="title">Tic Tac Toe</h1>
       <h2 className="whose-turn">{`${currentEmoji}'s Turn`}</h2>
-      <div className="container">
-        {gameBoard.map((emojiChoice, index) => (
-          <Square
-            key={index}
-            index={index}
-            emoji={emojiChoice}
-            clickHandler={setSquareEmoji}
-          />
-        ))}
+      <div className="flex-container">
+        <div className="empty-div"></div>
+        <div className="grid-container">
+          {gameBoard.map((emojiChoice, index) => (
+            <Square
+              key={index}
+              index={index}
+              emoji={emojiChoice}
+              clickHandler={setSquareEmoji}
+            />
+          ))}
+        </div>
+
+        <div className="score-container">
+          <h3>Score:</h3>
+          <p>🐱= {catScore}</p>
+          <p>🐶= {dogScore}</p>
+        </div>
       </div>
-      {showCelebration(gameHasBeenWon)}
+
+      {showCelebrationIf(gameHasBeenWon)}
       <button className="new-game" onClick={resetBoard}>
         Reset Game
       </button>
