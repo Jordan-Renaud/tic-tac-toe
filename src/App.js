@@ -1,35 +1,36 @@
 import Square from "./Square";
 import { useState } from "react";
+import Confetti from "react-confetti";
 import "./App.css";
 
 function App() {
+  const newGameBoard = () => new Array(9).fill("");
+
   const [currentEmoji, setCurrentEmoji] = useState("🐱");
-  const [gameBoard, setGameBoard] = useState(resetBoard());
+  const [gameBoard, setGameBoard] = useState(newGameBoard);
+  const [gameHasBeenWon, setGameHasBeenWon] = useState(false);
 
-  function resetBoard() {
-    return new Array(9).fill("");
+  function setSquareEmoji(squareIndex) {
+    setGameBoard(toUpdatedGameBoard(squareIndex));
   }
 
-  function setSquareEmoji(index) {
-    setGameBoard(toNewGameBoard(index));
-  }
+  function toUpdatedGameBoard(index) {
+    let updatedGameBoard = gameBoard;
 
-  function updateEmojiForNext(emoji) {
-    setCurrentEmoji(emoji === "🐱" ? "🐶" : "🐱");
-  }
+    if (updatedGameBoard[index] === "") {
+      updatedGameBoard[index] = currentEmoji;
 
-  function toNewGameBoard(index) {
-    let newGameBoard = gameBoard;
-
-    if (newGameBoard[index] === "") {
-      newGameBoard[index] = currentEmoji;
-      if (someoneHasWon(newGameBoard)) {
-        console.log("win");
+      if (someoneHasWon(updatedGameBoard)) {
+        setGameHasBeenWon(true);
       }
 
       updateEmojiForNext(currentEmoji);
     }
-    return newGameBoard;
+    return updatedGameBoard;
+  }
+
+  function updateEmojiForNext(emoji) {
+    setCurrentEmoji(emoji === "🐱" ? "🐶" : "🐱");
   }
 
   function someoneHasWon(gameBoard) {
@@ -74,11 +75,28 @@ function App() {
     return false;
   }
 
+  function showCelebration(someoneWon) {
+    return someoneWon ? (
+      <Confetti
+        className="confetti"
+        width={"500px"}
+        height={"580px"}
+        recycle={false}
+      />
+    ) : (
+      <></>
+    );
+  }
+
+  function resetBoard() {
+    setGameBoard(newGameBoard);
+    setGameHasBeenWon(false);
+  }
+
   return (
     <div className="App">
       <h1 className="title">Tic Tac Toe</h1>
       <h2 className="whose-turn">{`${currentEmoji}'s Turn`}</h2>
-
       <div className="container">
         {gameBoard.map((emojiChoice, index) => (
           <Square
@@ -89,7 +107,8 @@ function App() {
           />
         ))}
       </div>
-      <button className="new-game" onClick={() => setGameBoard(resetBoard())}>
+      {showCelebration(gameHasBeenWon)}
+      <button className="new-game" onClick={resetBoard}>
         Reset Game
       </button>
     </div>

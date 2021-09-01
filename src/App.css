@@ -31,3 +31,7 @@
   background-color: orange;
   transform: scale(0.95);
 }
+
+.App .confetti {
+  margin: 12rem auto;
+}
